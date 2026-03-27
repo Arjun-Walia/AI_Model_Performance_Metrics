@@ -1,0 +1,30 @@
+pipeline:
+  bootstrap_csv: data/raw/ai_model_experiments_5000.csv
+  output_csv: data/processed/phase1_bootstrap_curated.csv
+  manifest_json: reports/data_manifest.json
+  target_min_rows: 3000
+  synthetic_max_ratio: 0.30
+
+sources:
+  paperswithcode:
+    enabled: true
+    base_url: https://paperswithcode.com/api/v1
+    timeout_seconds: 30
+    max_retries: 3
+    max_rows: 100
+  openml:
+    enabled: true
+    base_url: https://www.openml.org/api/v1
+    timeout_seconds: 30
+    max_retries: 3
+    max_rows: 100
+  huggingface:
+    enabled: true
+    base_url: https://huggingface.co/api
+    timeout_seconds: 30
+    max_retries: 3
+    max_rows: 100
+
+run:
+  random_seed: 42
+  timezone: UTC

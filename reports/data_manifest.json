@@ -1,0 +1,25 @@
+{
+  "generated_at_utc": "2026-03-27T07:11:04.098521+00:00",
+  "row_count": 5200,
+  "target_min_rows": 3000,
+  "synthetic_max_ratio": 0.3,
+  "sources_enabled": {
+    "paperswithcode": true,
+    "openml": true,
+    "huggingface": true
+  },
+  "source_row_counts": {
+    "bootstrap": 5000,
+    "paperswithcode": 0,
+    "openml": 100,
+    "huggingface": 100
+  },
+  "augmentation": {
+    "synthetic_rows_added": 0,
+    "synthetic_ratio_actual": 0.0,
+    "synthetic_cap_respected": true,
+    "target_achieved": true,
+    "cap_limited": false
+  },
+  "note": "Phase 1 ingestion merges bootstrap/API data, applies capped synthetic augmentation when needed, and logs provenance."
+}
