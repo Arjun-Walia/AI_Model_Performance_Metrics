@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import json
 from datetime import datetime, timezone
 from typing import Dict
@@ -15,6 +14,7 @@ from src.collection.clients.openml import fetch_openml_rows
 from src.collection.clients.paperswithcode import fetch_paperswithcode_rows
 from src.collection.normalize import merge_and_deduplicate, normalize_api_rows
 from src.common.config import AppConfig
+from src.common.manifest import sha256_file, validate_augmentation_guard
 from src.common.schema import coerce_schema_types, validate_required_columns, validate_value_ranges
 
 
@@ -63,7 +63,7 @@ class DataCollectionPipeline:
         output_dir.mkdir(parents=True, exist_ok=True)
         augmented_df.to_csv(self.config.pipeline.output_csv, index=False)
 
-        csv_checksum_sha256 = hashlib.sha256(self.config.pipeline.output_csv.read_bytes()).hexdigest()
+        csv_checksum_sha256 = sha256_file(self.config.pipeline.output_csv)
 
         manifest = {
             "generated_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -101,6 +101,7 @@ class DataCollectionPipeline:
 
         manifest_path = self.config.pipeline.manifest_json
         manifest_path.parent.mkdir(parents=True, exist_ok=True)
+        validate_augmentation_guard(manifest, self.config.pipeline.synthetic_max_ratio)
         with manifest_path.open("w", encoding="utf-8") as f:
             json.dump(manifest, f, indent=2)
 
