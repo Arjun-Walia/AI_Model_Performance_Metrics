@@ -40,10 +40,21 @@ class RunConfig:
 
 
 @dataclass
+class AnalysisConfig:
+    input_csv: Path
+    output_csv: Path
+    report_json: Path
+    model_summary_csv: Path
+    top_n_models: int
+    weights: Dict[str, float]
+
+
+@dataclass
 class AppConfig:
     pipeline: PipelineConfig
     sources: SourceConfig
     run: RunConfig
+    analysis: AnalysisConfig
 
 
 def _resolve_path(project_root: Path, value: str) -> Path:
@@ -92,4 +103,27 @@ def load_config(config_path: Path) -> AppConfig:
         timezone=str(run_raw.get("timezone", "UTC")),
     )
 
-    return AppConfig(pipeline=pipeline, sources=sources, run=run)
+    analysis_raw = raw.get("analysis", {})
+    default_weights = {
+        "accuracy": 0.35,
+        "latency": 0.2,
+        "throughput": 0.2,
+        "memory": 0.1,
+        "cost": 0.15,
+    }
+    raw_weights = analysis_raw.get("weights", {})
+    merged_weights = {
+        key: float(raw_weights.get(key, default_value))
+        for key, default_value in default_weights.items()
+    }
+
+    analysis = AnalysisConfig(
+        input_csv=_resolve_path(project_root, str(analysis_raw.get("input_csv", "data/processed/phase1_bootstrap_curated.csv"))),
+        output_csv=_resolve_path(project_root, str(analysis_raw.get("output_csv", "data/processed/phase2_scored_dataset.csv"))),
+        report_json=_resolve_path(project_root, str(analysis_raw.get("report_json", "reports/phase2_analysis_report.json"))),
+        model_summary_csv=_resolve_path(project_root, str(analysis_raw.get("model_summary_csv", "reports/phase2_model_summary.csv"))),
+        top_n_models=int(analysis_raw.get("top_n_models", 10)),
+        weights=merged_weights,
+    )
+
+    return AppConfig(pipeline=pipeline, sources=sources, run=run, analysis=analysis)

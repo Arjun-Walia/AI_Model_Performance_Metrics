@@ -35,6 +35,13 @@ If an API endpoint is unavailable, the pipeline skips that source and continues 
 Synthetic rows (if generated) are tagged with provenance columns: `source_name`, `is_synthetic`, `synthetic_fields`, `confidence_score`.
 Manifest metadata includes reproducibility fields such as `random_seed`, `timezone`, and output CSV SHA-256 checksum.
 
+Phase 2 analysis is now available:
+
+- Computes normalized score components for quality/performance/cost metrics
+- Produces `ai_efficiency_score` (0 to 1) using configurable weights
+- Exports scored dataset and per-model leaderboard summary
+- Writes `reports/phase2_analysis_report.json` with checksums and top models
+
 ## Setup
 
 1. Create and activate a Python environment.
@@ -49,7 +56,14 @@ pip install -r requirements.txt
 ## Run Phase 1 Baseline
 
 ```bash
-python -m src.cli --config config/config.yaml
+python -m src.cli --config config/config.yaml --phase all
+```
+
+Or run individual phases:
+
+```bash
+python -m src.cli --config config/config.yaml --phase collect
+python -m src.cli --config config/config.yaml --phase analyze
 ```
 
 Expected output:

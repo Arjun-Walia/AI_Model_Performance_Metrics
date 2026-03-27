@@ -28,3 +28,16 @@ sources:
 run:
   random_seed: 42
   timezone: UTC
+
+analysis:
+  input_csv: data/processed/phase1_bootstrap_curated.csv
+  output_csv: data/processed/phase2_scored_dataset.csv
+  report_json: reports/phase2_analysis_report.json
+  model_summary_csv: reports/phase2_model_summary.csv
+  top_n_models: 10
+  weights:
+    accuracy: 0.35
+    latency: 0.20
+    throughput: 0.20
+    memory: 0.10
+    cost: 0.15

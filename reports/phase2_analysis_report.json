@@ -1,0 +1,120 @@
+{
+  "generated_at_utc": "2026-03-27T07:23:49.311164+00:00",
+  "input_csv": "D:\\AI_Model_Performance_Metrics\\data\\processed\\phase1_bootstrap_curated.csv",
+  "output_csv": "D:\\AI_Model_Performance_Metrics\\data\\processed\\phase2_scored_dataset.csv",
+  "output_csv_sha256": "8036511ca94079caa9d92e2209577362c7f13040e9be94f2caf0eaaa9fac094b",
+  "model_summary_csv": "D:\\AI_Model_Performance_Metrics\\reports\\phase2_model_summary.csv",
+  "model_summary_sha256": "4c3ce5cc37698df67e91d521536ce39517684d64ff1210099a691517d3d82d56",
+  "rows_scored": 5200,
+  "models_analyzed": 239,
+  "top_n_models": 10,
+  "top_models": [
+    {
+      "Model": "pyannote/speaker-diarization-3.1",
+      "experiments": 1,
+      "mean_accuracy": 0.0,
+      "mean_latency_ms": 0.0,
+      "mean_tokens_per_second": 11743148.0,
+      "mean_memory_usage_gb": 0.0,
+      "mean_compute_cost_usd": 0.0,
+      "mean_ai_efficiency_score": 0.65
+    },
+    {
+      "Model": "hexgrad/Kokoro-82M",
+      "experiments": 1,
+      "mean_accuracy": 0.0,
+      "mean_latency_ms": 0.0,
+      "mean_tokens_per_second": 9380096.0,
+      "mean_memory_usage_gb": 0.0,
+      "mean_compute_cost_usd": 0.0,
+      "mean_ai_efficiency_score": 0.6097543691010282
+    },
+    {
+      "Model": "meta-llama/Llama-3.1-8B-Instruct",
+      "experiments": 1,
+      "mean_accuracy": 0.0,
+      "mean_latency_ms": 0.0,
+      "mean_tokens_per_second": 8496488.0,
+      "mean_memory_usage_gb": 0.0,
+      "mean_compute_cost_usd": 0.0,
+      "mean_ai_efficiency_score": 0.5947054571738345
+    },
+    {
+      "Model": "DeepSeek-R1",
+      "experiments": 22,
+      "mean_accuracy": 0.8763636363636365,
+      "mean_latency_ms": 199.10454545454547,
+      "mean_tokens_per_second": 77.7790909090909,
+      "mean_memory_usage_gb": 23.648636363636363,
+      "mean_compute_cost_usd": 0.6225909090909091,
+      "mean_ai_efficiency_score": 0.541973662532359
+    },
+    {
+      "Model": "openai/whisper-large-v3",
+      "experiments": 1,
+      "mean_accuracy": 0.0,
+      "mean_latency_ms": 0.0,
+      "mean_tokens_per_second": 4898208.0,
+      "mean_memory_usage_gb": 0.0,
+      "mean_compute_cost_usd": 0.0,
+      "mean_ai_efficiency_score": 0.5334224008758129
+    },
+    {
+      "Model": "openai/gpt-oss-120b",
+      "experiments": 1,
+      "mean_accuracy": 0.0,
+      "mean_latency_ms": 0.0,
+      "mean_tokens_per_second": 4449154.0,
+      "mean_memory_usage_gb": 0.0,
+      "mean_compute_cost_usd": 0.0,
+      "mean_ai_efficiency_score": 0.5257744686518471
+    },
+    {
+      "Model": "Llama-3.1-70B",
+      "experiments": 50,
+      "mean_accuracy": 0.8678199999999999,
+      "mean_latency_ms": 219.2416,
+      "mean_tokens_per_second": 67.3998,
+      "mean_memory_usage_gb": 24.072400000000002,
+      "mean_compute_cost_usd": 0.6430400000000001,
+      "mean_ai_efficiency_score": 0.5257447693373208
+    },
+    {
+      "Model": "Llama-3.1-8B",
+      "experiments": 63,
+      "mean_accuracy": 0.8663809523809524,
+      "mean_latency_ms": 227.59,
+      "mean_tokens_per_second": 68.28253968253969,
+      "mean_memory_usage_gb": 22.22285714285714,
+      "mean_compute_cost_usd": 0.6793015873015873,
+      "mean_ai_efficiency_score": 0.5220562417894233
+    },
+    {
+      "Model": "Llama-2-7B",
+      "experiments": 93,
+      "mean_accuracy": 0.8692258064516128,
+      "mean_latency_ms": 216.39666666666665,
+      "mean_tokens_per_second": 67.86526881720431,
+      "mean_memory_usage_gb": 24.940430107526883,
+      "mean_compute_cost_usd": 0.6843010752688172,
+      "mean_ai_efficiency_score": 0.5213720397155782
+    },
+    {
+      "Model": "Gemini-1.5-Flash",
+      "experiments": 153,
+      "mean_accuracy": 0.8567908496732026,
+      "mean_latency_ms": 208.3637908496732,
+      "mean_tokens_per_second": 68.08699346405228,
+      "mean_memory_usage_gb": 23.711045751633986,
+      "mean_compute_cost_usd": 0.7121045751633986,
+      "mean_ai_efficiency_score": 0.5212443498633241
+    }
+  ],
+  "score_weights": {
+    "accuracy": 0.35,
+    "latency": 0.2,
+    "throughput": 0.2,
+    "memory": 0.1,
+    "cost": 0.15
+  }
+}
