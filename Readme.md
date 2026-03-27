@@ -57,6 +57,14 @@ Expected output:
 - Curated CSV in `data/processed/`
 - Manifest JSON in `reports/`
 
+## Quality Check
+
+Run tests plus a pipeline smoke check with one command:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_quality.ps1
+```
+
 ## Dataset Schema
 
 The project preserves this required core schema:
