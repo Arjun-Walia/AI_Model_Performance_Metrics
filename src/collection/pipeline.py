@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from datetime import datetime, timezone
 from typing import Dict
@@ -62,11 +63,21 @@ class DataCollectionPipeline:
         output_dir.mkdir(parents=True, exist_ok=True)
         augmented_df.to_csv(self.config.pipeline.output_csv, index=False)
 
+        csv_checksum_sha256 = hashlib.sha256(self.config.pipeline.output_csv.read_bytes()).hexdigest()
+
         manifest = {
             "generated_at_utc": datetime.now(timezone.utc).isoformat(),
             "row_count": int(len(augmented_df)),
             "target_min_rows": int(self.config.pipeline.target_min_rows),
             "synthetic_max_ratio": float(self.config.pipeline.synthetic_max_ratio),
+            "run": {
+                "random_seed": int(self.config.run.random_seed),
+                "timezone": str(self.config.run.timezone),
+            },
+            "artifacts": {
+                "output_csv": str(self.config.pipeline.output_csv),
+                "output_csv_sha256": csv_checksum_sha256,
+            },
             "sources_enabled": {
                 "paperswithcode": self.config.sources.paperswithcode.enabled,
                 "openml": self.config.sources.openml.enabled,

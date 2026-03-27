@@ -1,8 +1,16 @@
 {
-  "generated_at_utc": "2026-03-27T07:11:04.098521+00:00",
+  "generated_at_utc": "2026-03-27T07:15:50.127526+00:00",
   "row_count": 5200,
   "target_min_rows": 3000,
   "synthetic_max_ratio": 0.3,
+  "run": {
+    "random_seed": 42,
+    "timezone": "UTC"
+  },
+  "artifacts": {
+    "output_csv": "D:\\AI_Model_Performance_Metrics\\data\\processed\\phase1_bootstrap_curated.csv",
+    "output_csv_sha256": "b2c2dbd559e43f2a21c4554270bcf72ab4cc2d0d052bd22200c73ec378b5fc8c"
+  },
   "sources_enabled": {
     "paperswithcode": true,
     "openml": true,

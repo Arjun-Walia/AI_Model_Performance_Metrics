@@ -114,10 +114,39 @@ def merge_and_deduplicate(bootstrap_df: pd.DataFrame, api_frames: List[pd.DataFr
     else:
         merged = pd.concat([bootstrap_df, *valid_api_frames], ignore_index=True)
 
+    metric_cols = [
+        "accuracy",
+        "latency_ms",
+        "tokens_per_second",
+        "memory_usage_gb",
+        "compute_cost_usd",
+    ]
+
+    source_priority_map = {
+        "bootstrap": 3,
+        "paperswithcode": 2,
+        "huggingface": 2,
+        "openml": 1,
+        "synthetic": 0,
+    }
+
+    merged = merged.copy()
+    merged["_metric_non_null_count"] = merged[metric_cols].notna().sum(axis=1)
+    merged["_source_priority"] = merged.get("source_name", "").map(source_priority_map).fillna(1).astype(int)
+    merged["_parsed_timestamp"] = pd.to_datetime(merged["run_timestamp"], errors="coerce", utc=True)
+
+    merged = merged.sort_values(
+        by=["_source_priority", "_metric_non_null_count", "_parsed_timestamp"],
+        ascending=[False, False, False],
+        na_position="last",
+    )
+
     merged = merged.drop_duplicates(
         subset=["Model", "dataset", "gpu_type", "batch_size", "run_timestamp"],
         keep="first",
     ).reset_index(drop=True)
+
+    merged = merged.drop(columns=["_metric_non_null_count", "_source_priority", "_parsed_timestamp"], errors="ignore")
 
     merged["experiment_id"] = pd.Series(range(1, len(merged) + 1), dtype="Int64")
     return merged

@@ -33,6 +33,7 @@ Phase 1 implementation currently includes collection + merge pipeline:
 
 If an API endpoint is unavailable, the pipeline skips that source and continues with available data.
 Synthetic rows (if generated) are tagged with provenance columns: `source_name`, `is_synthetic`, `synthetic_fields`, `confidence_score`.
+Manifest metadata includes reproducibility fields such as `random_seed`, `timezone`, and output CSV SHA-256 checksum.
 
 ## Setup
 
