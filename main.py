@@ -85,25 +85,20 @@ mean2 = np.mean(v100_latency)
 var1 = np.var(a100_latency, ddof=1)
 var2 = np.var(v100_latency, ddof=1)
 
-se = np.sqrt((var1 / n1) + (var2 / n2))
+sp2 = ((n1 - 1)*var1 + (n2 - 1)*var2) / (n1 + n2 - 2)
+
+se = np.sqrt(sp2 * (1/n1 + 1/n2))
 
 t_stat = (mean1 - mean2) / se
 
-df_num = (var1 / n1 + var2 / n2) ** 2
-df_den = ((var1 / n1) ** 2) / (n1 - 1) + ((var2 / n2) ** 2) / (n2 - 1)
-df_welch = df_num / df_den
+df_simple = n1 + n2 - 2
 
-# Two-tailed p-value
-p_value = 2 * (1 - t.cdf(abs(t_stat), df=df_welch))
-
-print("Hypothesis Test: Does GPU type affect mean latency?")
-print("H0: Mean latency of A100 and V100 GPUs is equal.")
-print("H1: Mean latency of A100 and V100 GPUs is different.\n")
+p_value = 2 * (1 - t.cdf(abs(t_stat), df=df_simple))
 
 print(f"A100 mean latency: {mean1:.2f} ms (n={n1})")
 print(f"V100 mean latency: {mean2:.2f} ms (n={n2})")
 print(f"T-statistic: {t_stat:.4f}")
-print(f"Degrees of freedom: {df_welch:.2f}")
+print(f"Degrees of freedom: {df_simple}")
 print(f"P-value: {p_value:.4f}")
 
 alpha = 0.05
@@ -111,6 +106,7 @@ if p_value < alpha:
     print(f"Conclusion: Reject H0 at alpha={alpha}. GPU type has a statistically significant effect on latency.")
 else:
     print(f"Conclusion: Fail to reject H0 at alpha={alpha}. No statistically significant difference in latency between GPU types.")
+
 # Training Model
 feature_cols = ["latency_ms", "tokens_per_second", "memory_usage_gb", "batch_size", "Model", "dataset", "gpu_type"]
 x = pd.get_dummies(df[feature_cols], columns=["Model", "dataset", "gpu_type"], drop_first=True)
